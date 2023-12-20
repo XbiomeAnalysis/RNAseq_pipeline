@@ -1,0 +1,8 @@
+prerequisites
+pipeline
+software-install
+from-fastq-files-to-alignments
+quality-control-of-fastq-files
+trimming
+salmon
+differential-expression-analysis

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Pipeline | RNAseq analysis pipeline</title>
+  <meta name="description" content="Chapter 2 Pipeline | RNAseq analysis pipeline" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Pipeline | RNAseq analysis pipeline" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Chapter 2 Pipeline | RNAseq analysis pipeline" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Pipeline | RNAseq analysis pipeline" />
+  
+  <meta name="twitter:description" content="Chapter 2 Pipeline | RNAseq analysis pipeline" />
+  
+
+<meta name="author" content="Zhengnong Zhu" />
+
+
+<meta name="date" content="2023-12-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="assets/style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">RNAseq analysis pipeline</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="pipeline.html"><a href="pipeline.html"><i class="fa fa-check"></i><b>2</b> Pipeline</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="pipeline.html"><a href="pipeline.html#software-install"><i class="fa fa-check"></i><b>2.1</b> software install</a></li>
+<li class="chapter" data-level="2.2" data-path="pipeline.html"><a href="pipeline.html#from-fastq-files-to-alignments"><i class="fa fa-check"></i><b>2.2</b> from fastq files to alignments</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="pipeline.html"><a href="pipeline.html#quality-control-of-fastq-files"><i class="fa fa-check"></i><b>2.2.1</b> Quality control of FASTQ files</a></li>
+<li class="chapter" data-level="2.2.2" data-path="pipeline.html"><a href="pipeline.html#trimming"><i class="fa fa-check"></i><b>2.2.2</b> Trimming</a></li>
+<li class="chapter" data-level="2.2.3" data-path="pipeline.html"><a href="pipeline.html#salmon"><i class="fa fa-check"></i><b>2.2.3</b> salmon</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="pipeline.html"><a href="pipeline.html#differential-expression-analysis"><i class="fa fa-check"></i><b>2.3</b> differential expression analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">RNAseq analysis pipeline</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pipeline" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Pipeline<a href="pipeline.html#pipeline" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="software-install" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> software install<a href="pipeline.html#software-install" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are some required software that you can install with conda</p>
+<pre class="shell"><code>conda create -n salmon salmon
+conda activate salmon
+conda install trimmomatic
+conda install multiqc</code></pre>
+</div>
+<div id="from-fastq-files-to-alignments" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> from fastq files to alignments<a href="pipeline.html#from-fastq-files-to-alignments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="quality-control-of-fastq-files" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Quality control of FASTQ files<a href="pipeline.html#quality-control-of-fastq-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>make directory</p>
+<pre class="sell"><code>cd workspace
+mkdir datasets</code></pre>
+<p>go to <code>workspace/</code>, fastq files is in <code>datasets/</code>, the test data can be found at <code>/share/work/HPC/work_tmp/PipelineJob_141934_20230925/data</code></p>
+<pre class="shell"><code>mkdir fastqc
+for filename in datasets/*.fastq.gz
+do
+    fastqc -o fastqc $filename
+done
+multiqc fastqc/*</code></pre>
+<p>go to <code>fastqc</code>, open <code>multiqc_report.html</code> in browser, check whether the data is normal</p>
+</div>
+<div id="trimming" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Trimming<a href="pipeline.html#trimming" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>make directory</p>
+<pre class="shell"><code>mkdir trim
+cd trim
+mkdir qc
+cd ../../</code></pre>
+<p>make filenames list, each row represent a sample, the test data can be found at <code>/share/work/HPC/work_tmp/PipelineJob_141934_20230925/data/raw_filenames.txt</code></p>
+<pre class="shell"><code>head filenames.txt
+sample01
+sample02
+sample03</code></pre>
+<p>trimming</p>
+<pre class="shell"><code>cat filenames.txt | parallel -j 6 --results logs/trimmomatic/ --joblog logs/trimmomatic.log \
+trimmomatic PE -threads 4 \
+    -phred33 \
+    -trimlog trim/qc/{}.log \
+    datasets/{}_1.fastq.gz datasets/{}_2.fastq.gz \
+    trim/qc/{}_1_paired.fastq trim/qc/{}_1_unpaired.fastq \
+    trim/qc/{}_2_paired.fastq trim/qc/{}_2_unpaired.fastq \
+    ILLUMINACLIP:$MINICONDA/envs/salmon/share/trimmomatic/adapters/TruSeq3-PE-2.fa:2:30:10:2:TRUE \
+    LEADING:20 TRAILING:20 \
+    SLIDINGWINDOW:4:15 \
+    MINLEN:36 &amp;</code></pre>
+</div>
+<div id="salmon" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> salmon<a href="pipeline.html#salmon" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>make directory</p>
+<pre class="shell"><code>mkdri output
+mkdir references</code></pre>
+<p>if there is no index of salmon, you need build index with salmon, the test data can be found at <code>/share/projects/Analytics/IO/caiyi/iop229-rnaseqnewtargettumor/data/references/MmvM33_samlon_ind</code></p>
+<pre class="shell"><code>salmon index -t references.fa.gz -i references/ref_salmon_ind</code></pre>
+<p>Quantifying the samples</p>
+<pre class="shell"><code>nohup cat filenames.txt | parallel --resume-failed --tmpdir trim/salmon/tmpdir -j 3 --results logs/salmon_map_PE/ --joblog logs/salmon_map_PE.log \
+salmon quant -i references/ref_salmon_ind -l IU \
+    -1 trim/qc/{}_1_paired.fastq \
+    -2 trim/qc/{}_2_paired.fastq \
+    -p 8 \
+    --validateMappings \
+    --recoverOrphans \
+    --allowDovetail \
+    --useVBOpt \
+    --seqBias \
+    -o output/salmon/{}_quant &amp;</code></pre>
+<p>The test salmon data can be found at <code>/share/work/HPC/work_tmp/PipelineJob_141934_20230925/trim/salmon/*_quant</code></p>
+</div>
+</div>
+<div id="differential-expression-analysis" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> differential expression analysis<a href="pipeline.html#differential-expression-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>make directory</p>
+<pre class="shell"><code>cd output
+mkdir DA</code></pre>
+<p>The differential expression analysis were performed in R. once in R, set your working directory <code>setwd('~/workspace/output/DA')</code></p>
+<p>The <code>metadata</code> of samples contain group information</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="pipeline.html#cb11-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-2"><a href="pipeline.html#cb11-2" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb11-3"><a href="pipeline.html#cb11-3" tabindex="-1"></a><span class="fu">library</span>(tximport)</span>
+<span id="cb11-4"><a href="pipeline.html#cb11-4" tabindex="-1"></a><span class="fu">library</span>(GenomicFeatures)</span>
+<span id="cb11-5"><a href="pipeline.html#cb11-5" tabindex="-1"></a><span class="fu">library</span>(DESeq2)</span>
+<span id="cb11-6"><a href="pipeline.html#cb11-6" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb11-7"><a href="pipeline.html#cb11-7" tabindex="-1"></a><span class="fu">library</span>(gplots)</span>
+<span id="cb11-8"><a href="pipeline.html#cb11-8" tabindex="-1"></a><span class="fu">library</span>(clusterProfiler) <span class="co"># need latest version 3.14.3</span></span>
+<span id="cb11-9"><a href="pipeline.html#cb11-9" tabindex="-1"></a><span class="fu">library</span>(enrichplot)</span>
+<span id="cb11-10"><a href="pipeline.html#cb11-10" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="pipeline.html#cb11-11" tabindex="-1"></a><span class="fu">options</span>(<span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-12"><a href="pipeline.html#cb11-12" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="pipeline.html#cb11-13" tabindex="-1"></a><span class="co"># ref.annotation.gtf can be found at /share/projects/Analytics/IO/caiyi/iop229-rnaseqnewtargettumor/data/references/gencode.vM33.primary_assembly.annotation.gtf</span></span>
+<span id="cb11-14"><a href="pipeline.html#cb11-14" tabindex="-1"></a>txdb <span class="ot">&lt;-</span> <span class="fu">makeTxDbFromGFF</span>(<span class="st">&#39;~/workspace/references/ref.annotation.gtf&#39;</span>)</span>
+<span id="cb11-15"><a href="pipeline.html#cb11-15" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">keys</span>(txdb, <span class="at">keytype =</span> <span class="st">&quot;TXNAME&quot;</span>)</span>
+<span id="cb11-16"><a href="pipeline.html#cb11-16" tabindex="-1"></a>tx2gene <span class="ot">&lt;-</span> <span class="fu">select</span>(txdb, <span class="at">keys =</span> k, <span class="at">keytype =</span> <span class="st">&quot;TXNAME&quot;</span>, <span class="at">columns =</span> <span class="st">&quot;GENEID&quot;</span>)</span>
+<span id="cb11-17"><a href="pipeline.html#cb11-17" tabindex="-1"></a><span class="fu">head</span>(tx2gene)</span>
+<span id="cb11-18"><a href="pipeline.html#cb11-18" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="pipeline.html#cb11-19" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;~/workspace/filenames.txt&#39;</span>, <span class="at">header =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-20"><a href="pipeline.html#cb11-20" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&#39;~/workspace/output/salmon&#39;</span>, <span class="fu">paste0</span>(samples<span class="sc">$</span>V1, <span class="st">&quot;_quant&quot;</span>), <span class="st">&quot;quant.sf&quot;</span>)</span>
+<span id="cb11-21"><a href="pipeline.html#cb11-21" tabindex="-1"></a><span class="fu">names</span>(files) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(samples<span class="sc">$</span>V1)</span>
+<span id="cb11-22"><a href="pipeline.html#cb11-22" tabindex="-1"></a>txi.salmon <span class="ot">&lt;-</span> <span class="fu">tximport</span>(files, <span class="at">type =</span> <span class="st">&quot;salmon&quot;</span>, <span class="at">tx2gene =</span> tx2gene)</span>
+<span id="cb11-23"><a href="pipeline.html#cb11-23" tabindex="-1"></a><span class="fu">head</span>(txi.salmon<span class="sc">$</span>counts)</span>
+<span id="cb11-24"><a href="pipeline.html#cb11-24" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="pipeline.html#cb11-25" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb11-26"><a href="pipeline.html#cb11-26" tabindex="-1"></a>    <span class="at">SeqID=</span>samples<span class="sc">$</span>V1,</span>
+<span id="cb11-27"><a href="pipeline.html#cb11-27" tabindex="-1"></a>    <span class="at">Group=</span><span class="fu">c</span>(</span>
+<span id="cb11-28"><a href="pipeline.html#cb11-28" tabindex="-1"></a>        <span class="fu">rep</span>(<span class="st">&#39;M43_PD1&#39;</span>,<span class="dv">3</span>),</span>
+<span id="cb11-29"><a href="pipeline.html#cb11-29" tabindex="-1"></a>        <span class="fu">rep</span>(<span class="st">&#39;M15_PD1&#39;</span>,<span class="dv">3</span>),</span>
+<span id="cb11-30"><a href="pipeline.html#cb11-30" tabindex="-1"></a>        <span class="fu">rep</span>(<span class="st">&#39;PD1&#39;</span>,<span class="dv">3</span>),</span>
+<span id="cb11-31"><a href="pipeline.html#cb11-31" tabindex="-1"></a>        <span class="fu">rep</span>(<span class="st">&#39;CTRL&#39;</span>,<span class="dv">3</span>),</span>
+<span id="cb11-32"><a href="pipeline.html#cb11-32" tabindex="-1"></a>        <span class="fu">rep</span>(<span class="st">&#39;R_PD1&#39;</span>,<span class="dv">3</span>)</span>
+<span id="cb11-33"><a href="pipeline.html#cb11-33" tabindex="-1"></a>    ),</span>
+<span id="cb11-34"><a href="pipeline.html#cb11-34" tabindex="-1"></a>    <span class="at">SampleID=</span><span class="fu">c</span>(</span>
+<span id="cb11-35"><a href="pipeline.html#cb11-35" tabindex="-1"></a>               <span class="st">&#39;M010-T1 1_1&#39;</span>,</span>
+<span id="cb11-36"><a href="pipeline.html#cb11-36" tabindex="-1"></a>               <span class="st">&#39;M010-T1 1_4&#39;</span>,</span>
+<span id="cb11-37"><a href="pipeline.html#cb11-37" tabindex="-1"></a>               <span class="st">&#39;M010-T1 1_6&#39;</span>,</span>
+<span id="cb11-38"><a href="pipeline.html#cb11-38" tabindex="-1"></a>               <span class="st">&#39;M010-T1 1_8&#39;</span>,</span>
+<span id="cb11-39"><a href="pipeline.html#cb11-39" tabindex="-1"></a>               <span class="st">&#39;M010-T1 1_10&#39;</span>,</span>
+<span id="cb11-40"><a href="pipeline.html#cb11-40" tabindex="-1"></a>               <span class="st">&#39;M010-T2 2_1&#39;</span>,</span>
+<span id="cb11-41"><a href="pipeline.html#cb11-41" tabindex="-1"></a>               <span class="st">&#39;M010-T2 2_9&#39;</span>,</span>
+<span id="cb11-42"><a href="pipeline.html#cb11-42" tabindex="-1"></a>               <span class="st">&#39;M010-T8 8_1&#39;</span>,</span>
+<span id="cb11-43"><a href="pipeline.html#cb11-43" tabindex="-1"></a>               <span class="st">&#39;M010-T8 8_4&#39;</span>,</span>
+<span id="cb11-44"><a href="pipeline.html#cb11-44" tabindex="-1"></a>               <span class="st">&#39;M010-T8 8_10&#39;</span>,</span>
+<span id="cb11-45"><a href="pipeline.html#cb11-45" tabindex="-1"></a>               <span class="st">&#39;M010-T8 8_2&#39;</span>,</span>
+<span id="cb11-46"><a href="pipeline.html#cb11-46" tabindex="-1"></a>               <span class="st">&#39;M010-T8 8_7&#39;</span>,</span>
+<span id="cb11-47"><a href="pipeline.html#cb11-47" tabindex="-1"></a>               <span class="st">&#39;M010-T2 2_7&#39;</span>,</span>
+<span id="cb11-48"><a href="pipeline.html#cb11-48" tabindex="-1"></a>               <span class="st">&#39;M010-T2 2_5&#39;</span>,</span>
+<span id="cb11-49"><a href="pipeline.html#cb11-49" tabindex="-1"></a>               <span class="st">&#39;M010-T2 2_2&#39;</span></span>
+<span id="cb11-50"><a href="pipeline.html#cb11-50" tabindex="-1"></a>               )</span>
+<span id="cb11-51"><a href="pipeline.html#cb11-51" tabindex="-1"></a>)</span>
+<span id="cb11-52"><a href="pipeline.html#cb11-52" tabindex="-1"></a></span>
+<span id="cb11-53"><a href="pipeline.html#cb11-53" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeqDataSetFromTximport</span>(txi.salmon, metadata, <span class="sc">~</span>Group)</span>
+<span id="cb11-54"><a href="pipeline.html#cb11-54" tabindex="-1"></a>dds <span class="ot">&lt;-</span> <span class="fu">DESeq</span>(dds)</span>
+<span id="cb11-55"><a href="pipeline.html#cb11-55" tabindex="-1"></a></span>
+<span id="cb11-56"><a href="pipeline.html#cb11-56" tabindex="-1"></a><span class="co"># Then, we create a sample distance heatmap and plot a PCA:</span></span>
+<span id="cb11-57"><a href="pipeline.html#cb11-57" tabindex="-1"></a>rld <span class="ot">&lt;-</span> <span class="fu">rlogTransformation</span>(dds)</span>
+<span id="cb11-58"><a href="pipeline.html#cb11-58" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">assay</span>(rld))</span>
+<span id="cb11-59"><a href="pipeline.html#cb11-59" tabindex="-1"></a>z <span class="ot">&lt;-</span> DESeq2<span class="sc">::</span><span class="fu">plotPCA</span>(rld, <span class="at">intgroup=</span><span class="st">&quot;Group&quot;</span>)</span>
+<span id="cb11-60"><a href="pipeline.html#cb11-60" tabindex="-1"></a>zz <span class="ot">&lt;-</span> DESeq2<span class="sc">::</span><span class="fu">plotPCA</span>(rld, <span class="at">returnData =</span> <span class="cn">TRUE</span>, <span class="at">intgroup=</span><span class="st">&quot;Group&quot;</span>)</span>
+<span id="cb11-61"><a href="pipeline.html#cb11-61" tabindex="-1"></a>zz <span class="ot">&lt;-</span> <span class="fu">merge</span>(zz, metadata, <span class="at">by.x=</span><span class="st">&quot;name&quot;</span>, <span class="at">by.y=</span><span class="st">&#39;SeqID&#39;</span>)</span>
+<span id="cb11-62"><a href="pipeline.html#cb11-62" tabindex="-1"></a>z <span class="sc">+</span> ggrepel<span class="sc">::</span><span class="fu">geom_label_repel</span>(<span class="at">data =</span> zz, <span class="fu">aes</span>(<span class="at">x=</span>PC1, <span class="at">y=</span>PC2, <span class="at">label=</span>SampleID))</span>
+<span id="cb11-63"><a href="pipeline.html#cb11-63" tabindex="-1"></a></span>
+<span id="cb11-64"><a href="pipeline.html#cb11-64" tabindex="-1"></a>(mycols <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>, <span class="st">&quot;Dark2&quot;</span>)[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">unique</span>(metadata<span class="sc">$</span>Group))])</span>
+<span id="cb11-65"><a href="pipeline.html#cb11-65" tabindex="-1"></a>sampleDists <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">dist</span>(<span class="fu">t</span>(<span class="fu">assay</span>(rld))))</span>
+<span id="cb11-66"><a href="pipeline.html#cb11-66" tabindex="-1"></a><span class="fu">heatmap.2</span>(<span class="fu">as.matrix</span>(sampleDists), <span class="at">key=</span>F, <span class="at">trace=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb11-67"><a href="pipeline.html#cb11-67" tabindex="-1"></a>          <span class="at">col=</span><span class="fu">colorpanel</span>(<span class="dv">100</span>, <span class="st">&quot;black&quot;</span>, <span class="st">&quot;white&quot;</span>),</span>
+<span id="cb11-68"><a href="pipeline.html#cb11-68" tabindex="-1"></a>          <span class="at">ColSideColors=</span>mycols[metadata<span class="sc">$</span>Group],</span>
+<span id="cb11-69"><a href="pipeline.html#cb11-69" tabindex="-1"></a>          <span class="at">RowSideColors=</span>mycols[metadata<span class="sc">$</span>Group],</span>
+<span id="cb11-70"><a href="pipeline.html#cb11-70" tabindex="-1"></a>          <span class="at">margin=</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>), <span class="at">main=</span><span class="st">&quot;Sample Distance Matrix&quot;</span>)</span>
+<span id="cb11-71"><a href="pipeline.html#cb11-71" tabindex="-1"></a></span>
+<span id="cb11-72"><a href="pipeline.html#cb11-72" tabindex="-1"></a><span class="co"># Volcano plot, CTRL vs PD1</span></span>
+<span id="cb11-73"><a href="pipeline.html#cb11-73" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">results</span>(dds, <span class="at">contrast =</span> <span class="fu">c</span>(<span class="st">&quot;Group&quot;</span>, <span class="st">&quot;CTRL&quot;</span>, <span class="st">&quot;PD1&quot;</span>))</span>
+<span id="cb11-74"><a href="pipeline.html#cb11-74" tabindex="-1"></a><span class="fu">summary</span>(res)</span>
+<span id="cb11-75"><a href="pipeline.html#cb11-75" tabindex="-1"></a><span class="fu">table</span>(res<span class="sc">$</span>padj<span class="sc">&lt;</span><span class="fl">0.05</span>)</span>
+<span id="cb11-76"><a href="pipeline.html#cb11-76" tabindex="-1"></a>res <span class="ot">&lt;-</span> res[<span class="fu">order</span>(res<span class="sc">$</span>padj), ]</span>
+<span id="cb11-77"><a href="pipeline.html#cb11-77" tabindex="-1"></a>resdata <span class="ot">&lt;-</span> <span class="fu">merge</span>(<span class="fu">as.data.frame</span>(res), <span class="fu">as.data.frame</span>(<span class="fu">counts</span>(dds, <span class="at">normalized=</span><span class="cn">TRUE</span>)), <span class="at">by=</span><span class="st">&quot;row.names&quot;</span>, <span class="at">sort=</span><span class="cn">FALSE</span>)</span>
+<span id="cb11-78"><a href="pipeline.html#cb11-78" tabindex="-1"></a><span class="fu">names</span>(resdata)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Gene&quot;</span></span>
+<span id="cb11-79"><a href="pipeline.html#cb11-79" tabindex="-1"></a><span class="fu">head</span>(resdata)</span>
+<span id="cb11-80"><a href="pipeline.html#cb11-80" tabindex="-1"></a>resdata <span class="ot">&lt;-</span> resdata <span class="sc">%&gt;%</span></span>
+<span id="cb11-81"><a href="pipeline.html#cb11-81" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">stableGeneID=</span><span class="fu">str_split_fixed</span>(Gene, <span class="st">&#39;</span><span class="sc">\\</span><span class="st">.&#39;</span>, <span class="dv">2</span>)[,<span class="dv">1</span>])</span>
+<span id="cb11-82"><a href="pipeline.html#cb11-82" tabindex="-1"></a></span>
+<span id="cb11-83"><a href="pipeline.html#cb11-83" tabindex="-1"></a><span class="fu">with</span>(res, <span class="fu">plot</span>(log2FoldChange, <span class="sc">-</span><span class="fu">log10</span>(pvalue), <span class="at">pch=</span><span class="dv">20</span>, <span class="at">main=</span><span class="st">&quot;Volcano plot&quot;</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.5</span>,<span class="dv">2</span>)))</span>
+<span id="cb11-84"><a href="pipeline.html#cb11-84" tabindex="-1"></a><span class="fu">with</span>(<span class="fu">subset</span>(res, padj<span class="sc">&lt;</span>.<span class="dv">05</span> ), <span class="fu">points</span>(log2FoldChange, <span class="sc">-</span><span class="fu">log10</span>(pvalue), <span class="at">pch=</span><span class="dv">20</span>, <span class="at">col=</span><span class="st">&quot;red&quot;</span>))</span>
+<span id="cb11-85"><a href="pipeline.html#cb11-85" tabindex="-1"></a></span>
+<span id="cb11-86"><a href="pipeline.html#cb11-86" tabindex="-1"></a><span class="co"># GO </span></span>
+<span id="cb11-87"><a href="pipeline.html#cb11-87" tabindex="-1"></a>organism <span class="ot">&lt;-</span> <span class="st">&#39;org.Mm.eg.db&#39;</span></span>
+<span id="cb11-88"><a href="pipeline.html#cb11-88" tabindex="-1"></a>original_gene_list <span class="ot">&lt;-</span> resdata<span class="sc">$</span>log2FoldChange</span>
+<span id="cb11-89"><a href="pipeline.html#cb11-89" tabindex="-1"></a><span class="fu">names</span>(original_gene_list) <span class="ot">&lt;-</span> resdata<span class="sc">$</span>Gene</span>
+<span id="cb11-90"><a href="pipeline.html#cb11-90" tabindex="-1"></a>gene_list <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(original_gene_list)</span>
+<span id="cb11-91"><a href="pipeline.html#cb11-91" tabindex="-1"></a>gene_list <span class="ot">&lt;-</span> <span class="fu">sort</span>(gene_list, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-92"><a href="pipeline.html#cb11-92" tabindex="-1"></a></span>
+<span id="cb11-93"><a href="pipeline.html#cb11-93" tabindex="-1"></a>gse <span class="ot">&lt;-</span> <span class="fu">gseGO</span>(<span class="at">geneList=</span>gene_list, </span>
+<span id="cb11-94"><a href="pipeline.html#cb11-94" tabindex="-1"></a>             <span class="at">ont =</span><span class="st">&quot;ALL&quot;</span>, </span>
+<span id="cb11-95"><a href="pipeline.html#cb11-95" tabindex="-1"></a>             <span class="at">keyType =</span> <span class="st">&quot;ENSEMBL&quot;</span>, </span>
+<span id="cb11-96"><a href="pipeline.html#cb11-96" tabindex="-1"></a>             <span class="at">nPerm =</span> <span class="dv">10000</span>, </span>
+<span id="cb11-97"><a href="pipeline.html#cb11-97" tabindex="-1"></a>             <span class="at">minGSSize =</span> <span class="dv">3</span>, </span>
+<span id="cb11-98"><a href="pipeline.html#cb11-98" tabindex="-1"></a>             <span class="at">maxGSSize =</span> <span class="dv">800</span>, </span>
+<span id="cb11-99"><a href="pipeline.html#cb11-99" tabindex="-1"></a>             <span class="at">pvalueCutoff =</span> <span class="fl">0.05</span>, </span>
+<span id="cb11-100"><a href="pipeline.html#cb11-100" tabindex="-1"></a>             <span class="at">verbose =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb11-101"><a href="pipeline.html#cb11-101" tabindex="-1"></a>             <span class="at">OrgDb =</span> organism, </span>
+<span id="cb11-102"><a href="pipeline.html#cb11-102" tabindex="-1"></a>             <span class="at">pAdjustMethod =</span> <span class="st">&quot;none&quot;</span>)</span>
+<span id="cb11-103"><a href="pipeline.html#cb11-103" tabindex="-1"></a></span>
+<span id="cb11-104"><a href="pipeline.html#cb11-104" tabindex="-1"></a><span class="fu">require</span>(DOSE)</span>
+<span id="cb11-105"><a href="pipeline.html#cb11-105" tabindex="-1"></a><span class="fu">dotplot</span>(gse, <span class="at">showCategory=</span><span class="dv">10</span>, <span class="at">split=</span><span class="st">&quot;.sign&quot;</span>) <span class="sc">+</span> <span class="fu">facet_grid</span>(.<span class="sc">~</span>.sign)</span>
+<span id="cb11-106"><a href="pipeline.html#cb11-106" tabindex="-1"></a></span>
+<span id="cb11-107"><a href="pipeline.html#cb11-107" tabindex="-1"></a><span class="fu">gseaplot</span>(gse, <span class="at">by =</span> <span class="st">&quot;all&quot;</span>, <span class="at">title =</span> gse<span class="sc">$</span>Description[<span class="dv">1</span>], <span class="at">geneSetID =</span> <span class="dv">1</span>)</span>
+<span id="cb11-108"><a href="pipeline.html#cb11-108" tabindex="-1"></a></span>
+<span id="cb11-109"><a href="pipeline.html#cb11-109" tabindex="-1"></a><span class="co"># KEGG pathway</span></span>
+<span id="cb11-110"><a href="pipeline.html#cb11-110" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">bitr</span>(<span class="fu">names</span>(original_gene_list), <span class="at">fromType =</span> <span class="st">&quot;ENSEMBL&quot;</span>, <span class="at">toType =</span> <span class="st">&quot;ENTREZID&quot;</span>, <span class="at">OrgDb=</span>organism)</span>
+<span id="cb11-111"><a href="pipeline.html#cb11-111" tabindex="-1"></a>dedup_ids <span class="ot">&lt;-</span> ids[<span class="sc">!</span><span class="fu">duplicated</span>(ids[<span class="fu">c</span>(<span class="st">&quot;ENSEMBL&quot;</span>)]),]</span>
+<span id="cb11-112"><a href="pipeline.html#cb11-112" tabindex="-1"></a>resdata2 <span class="ot">&lt;-</span> resdata[resdata<span class="sc">$</span>Gene <span class="sc">%in%</span> dedup_ids<span class="sc">$</span>ENSEMBL,]</span>
+<span id="cb11-113"><a href="pipeline.html#cb11-113" tabindex="-1"></a>resdata2<span class="sc">$</span>Y <span class="ot">&lt;-</span> dedup_ids<span class="sc">$</span>ENTREZID</span>
+<span id="cb11-114"><a href="pipeline.html#cb11-114" tabindex="-1"></a>kegg_gene_list <span class="ot">&lt;-</span> resdata2<span class="sc">$</span>log2FoldChange</span>
+<span id="cb11-115"><a href="pipeline.html#cb11-115" tabindex="-1"></a><span class="fu">names</span>(kegg_gene_list) <span class="ot">&lt;-</span> resdata2<span class="sc">$</span>Y</span>
+<span id="cb11-116"><a href="pipeline.html#cb11-116" tabindex="-1"></a>kegg_gene_list <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(kegg_gene_list)</span>
+<span id="cb11-117"><a href="pipeline.html#cb11-117" tabindex="-1"></a>kegg_gene_list <span class="ot">&lt;-</span> <span class="fu">sort</span>(kegg_gene_list, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-118"><a href="pipeline.html#cb11-118" tabindex="-1"></a></span>
+<span id="cb11-119"><a href="pipeline.html#cb11-119" tabindex="-1"></a><span class="fu">library</span>(R.utils)</span>
+<span id="cb11-120"><a href="pipeline.html#cb11-120" tabindex="-1"></a>R.utils<span class="sc">::</span><span class="fu">setOption</span>(<span class="st">&#39;clusterProfiler.download.method&#39;</span>, <span class="st">&#39;wget&#39;</span>)</span>
+<span id="cb11-121"><a href="pipeline.html#cb11-121" tabindex="-1"></a><span class="fu">getOption</span>(<span class="st">&#39;clusterProfiler.download.method&#39;</span>)</span>
+<span id="cb11-122"><a href="pipeline.html#cb11-122" tabindex="-1"></a></span>
+<span id="cb11-123"><a href="pipeline.html#cb11-123" tabindex="-1"></a>kegg_organism <span class="ot">&lt;-</span> <span class="st">&quot;mmu&quot;</span></span>
+<span id="cb11-124"><a href="pipeline.html#cb11-124" tabindex="-1"></a>kk2 <span class="ot">&lt;-</span> <span class="fu">gseKEGG</span>(<span class="at">geneList     =</span> kegg_gene_list,</span>
+<span id="cb11-125"><a href="pipeline.html#cb11-125" tabindex="-1"></a>               <span class="at">organism     =</span> kegg_organism,</span>
+<span id="cb11-126"><a href="pipeline.html#cb11-126" tabindex="-1"></a>               <span class="at">nPerm        =</span> <span class="dv">10000</span>,</span>
+<span id="cb11-127"><a href="pipeline.html#cb11-127" tabindex="-1"></a>               <span class="at">minGSSize    =</span> <span class="dv">3</span>,</span>
+<span id="cb11-128"><a href="pipeline.html#cb11-128" tabindex="-1"></a>               <span class="at">maxGSSize    =</span> <span class="dv">800</span>,</span>
+<span id="cb11-129"><a href="pipeline.html#cb11-129" tabindex="-1"></a>               <span class="at">pvalueCutoff =</span> <span class="fl">0.05</span>,</span>
+<span id="cb11-130"><a href="pipeline.html#cb11-130" tabindex="-1"></a>               <span class="at">pAdjustMethod =</span> <span class="st">&quot;none&quot;</span>,</span>
+<span id="cb11-131"><a href="pipeline.html#cb11-131" tabindex="-1"></a>               <span class="at">keyType       =</span> <span class="st">&quot;ncbi-geneid&quot;</span>)</span>
+<span id="cb11-132"><a href="pipeline.html#cb11-132" tabindex="-1"></a><span class="fu">dotplot</span>(kk2, <span class="at">showCategory =</span> <span class="dv">10</span>, <span class="at">title =</span> <span class="st">&quot;Enriched Pathways&quot;</span> , <span class="at">split=</span><span class="st">&quot;.sign&quot;</span>) <span class="sc">+</span> <span class="fu">facet_grid</span>(.<span class="sc">~</span>.sign)</span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XbiomeAnalysis/bookdown_demo/blob/main/01-preface.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["RNAseq analysis pipeline.pdf", "RNAseq analysis pipeline.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section",
+"scroll_highlight": true,
+"toc_depth": 3
+}
+});
+});
+</script>
+
+</body>
+
+</html>
